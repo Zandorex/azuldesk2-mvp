@@ -1,0 +1,11 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const dir = fs.mkdtempSync(path.join(os.tmpdir(),'azuldesk-'));
+process.env.DATA_FILE = path.join(dir,'db.json');
+process.env.ADMIN_PASSWORD = 'teste-seguro';
+const store = require('../src/store');
+test('cria AzulmedSP e administrador no primeiro início',()=>{const db=store.read();assert.equal(db.companies[0].id,'azulmedsp');assert.equal(db.users[0].role,'owner')});
+test('grava atualização de forma persistente',()=>{store.update(db=>db.contacts.push({id:'c1',companyId:'azulmedsp'}));assert.equal(store.read().contacts.length,1)});
