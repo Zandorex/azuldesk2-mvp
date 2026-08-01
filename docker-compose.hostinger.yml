@@ -1,0 +1,24 @@
+services:
+  azuldesk:
+    build:
+      context: https://github.com/SEU-USUARIO/azuldesk-mvp.git#main
+    restart: unless-stopped
+    ports:
+      - "3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      APP_URL: https://app.azuldesk.com.br
+      JWT_SECRET: TROQUE_POR_UMA_CHAVE_LONGA_E_ALEATORIA
+      ADMIN_EMAIL: admin@azuldesk.com.br
+      ADMIN_PASSWORD: TROQUE_POR_UMA_SENHA_FORTE
+      EVOLUTION_API_URL: http://187.77.252.73:32770
+      EVOLUTION_API_KEY: COLE_A_CHAVE_GLOBAL_DA_EVOLUTION
+      EVOLUTION_INSTANCE: azulmedsp
+      WEBHOOK_SECRET: TROQUE_POR_OUTRO_SEGREDO_LONGO
+      DATA_FILE: /app/data/azuldesk.json
+    volumes:
+      - azuldesk_data:/app/data
+
+volumes:
+  azuldesk_data:
